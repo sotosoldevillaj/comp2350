@@ -1,58 +1,71 @@
-import java.io.*;
+public class Mergesort {
 
-class MergeSort {
+    static void mergeSort(int array[], int leftIndex, int rightIndex) {
+        if (leftIndex < rightIndex) {
+            int middle = (leftIndex + rightIndex) / 2;
 
-    void merge(int arr[], int l, int m, int r) {
-        int n1 = m - l + 1;
-        int n2 = r - m;
+            mergeSort(array, leftIndex, middle);
+            mergeSort(array, middle + 1, rightIndex);
 
-        int L[] = new int[n1];
-        int R[] = new int[n2];
+            merge(array, leftIndex, middle, rightIndex);
+        }
+    }
 
-        for (int i = 0; i < n1; ++i)
-            L[i] = arr[l + i];
-        for (int j = 0; j < n2; ++j)
-            R[j] = arr[m + 1 + j];
+    static void merge(int array[], int left, int middle, int right) {
+        int sizeLeft = middle - left + 1;
+        int sizeRight = right - middle;
+
+        int[] leftSubarray = new int[sizeLeft];
+        int[] rightSubarray = new int[sizeRight];
+
+        for (int i = 0; i < sizeLeft; ++i) {
+            leftSubarray[i] = array[left + i];
+        }
+
+        for (int j = 0; j < sizeRight; ++j) {
+            rightSubarray[j] = array[middle + 1 + j];
+        }
 
         int i = 0, j = 0;
-        int k = l;
-        while (i < n1 && j < n2) {
-            if (L[i] <= R[j]) {
-                arr[k] = L[i];
+        int k = left;
+
+        while (i < sizeLeft && j < sizeRight) {
+            if (leftSubarray[i] <= rightSubarray[j]) {
+                array[k] = leftSubarray[i];
                 i++;
             } else {
-                arr[k] = R[j];
+                array[k] = rightSubarray[j];
                 j++;
             }
             k++;
         }
 
-        while (i < n1) {
-            arr[k] = L[i];
+        while (i < sizeLeft) {
+            array[k] = leftSubarray[i];
             i++;
             k++;
         }
 
-        while (j < n2) {
-            arr[k] = R[j];
+        while (j < sizeRight) {
+            array[k] = rightSubarray[j];
             j++;
             k++;
         }
     }
 
-    void sort(int arr[], int l, int r) {
-        if (l < r) {
-            int m = l + (r - l) / 2;
-            sort(arr, l, m);
-            sort(arr, m + 1, r);
-            merge(arr, l, m, r);
-        }
-    }
+    public static void main(String args[]) {
+        int array[] = { 12, 11, 13, 5, 6, 7 };
 
-    static void printArray(int arr[]) {
-        int n = arr.length;
-        for (int i = 0; i < n; ++i)
-            System.out.print(arr[i] + " ");
-        System.out.println();
+        System.out.println("Given array:");
+        for (int i : array) {
+            System.out.print(i + " ");
+        }
+
+        mergeSort(array, 0, array.length - 1);
+
+        System.out.println("\nSorted array:");
+        for (int i : array) {
+            System.out.print(i + " ");
+        }
     }
 }
