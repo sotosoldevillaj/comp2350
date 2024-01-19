@@ -35,7 +35,7 @@ public class Mergesort {
         }
     }
 
-    void sort(int arr[], int l, int r) {
+    void mergeSort(int arr[], int l, int r) {
         if (l < r) {
             int m = (l + r) / 2;
             sort(arr, l, m);
