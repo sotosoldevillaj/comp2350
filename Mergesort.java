@@ -42,5 +42,8 @@ public class Mergesort {
             sort(arr, m + 1, r);
             merge(arr, l, m, r);
         }
+    public void mergeSort(int arr[], int l, int r) {
+        sort(arr, l, r);
     }
+}
 }
